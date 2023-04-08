@@ -18,7 +18,7 @@ data class TrainingEntity(
     val name: String,
 
     @Required
-    val duration: Int,
+    val duration: Long,
 
     @Required // uživatel bude vybírat text z nějakého omezeného seznamu a podle textu se zobrazí ikona
     val icon: String

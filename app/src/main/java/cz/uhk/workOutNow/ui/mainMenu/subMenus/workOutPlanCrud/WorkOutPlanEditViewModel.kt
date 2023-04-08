@@ -12,7 +12,6 @@ class WorkOutPlanEditViewModel(
     fun selectTrainingEntityForEdit(trainingListEntityId: Long): Flow<TrainingListEntity> {
         return trainingEntityDao.selectTrainingEntityForEdit(trainingListEntityId)
     }
-
     fun updateTrainingListEntity(
         title: String,
         trainingListEntityId: Long,

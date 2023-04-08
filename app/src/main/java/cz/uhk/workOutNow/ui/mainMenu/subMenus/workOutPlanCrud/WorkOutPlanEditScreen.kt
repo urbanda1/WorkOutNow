@@ -70,11 +70,9 @@ fun WorkOutPlanEditScreen(
     }
 
     Column(
-        modifier = Modifier.offset(60.dp, 20.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.Start,
+        modifier = Modifier.offset(60.dp, 20.dp)
 
-        ) {
+    ) {
         Text(
             text = "Create new work out plan", modifier = Modifier.offset(70.dp, 0.dp)
         )
@@ -114,6 +112,10 @@ fun WorkOutPlanEditScreen(
 
 
         Row(
+            modifier = Modifier
+                .offset(0.dp, 0.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start,
         ) {
             IconButton(onClick = {
                 valueMenu = true
@@ -149,7 +151,7 @@ fun WorkOutPlanEditScreen(
 
         //zobrazení ikony při vytváření plánu work outu
         Row(
-            modifier = Modifier.offset(90.dp, 0.dp)
+            modifier = Modifier.offset(100.dp, 0.dp)
         ) {
             when (selectedItem) {
                 "Acrobatics" -> Icon(

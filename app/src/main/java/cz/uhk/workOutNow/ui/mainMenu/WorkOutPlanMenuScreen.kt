@@ -32,7 +32,7 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun WorkOutPlanMenuScreen(
     parentController: NavHostController,
-    viewModel: WorkOutTrainingsViewModel = getViewModel()
+    viewModel: WorkOutPlanMenuViewModel = getViewModel()
 ) {
 
     val workOutPlans = viewModel.trainingListEntity.collectAsState(emptyList())
@@ -134,7 +134,7 @@ fun WorkOutPlanMenuScreen(
 
                     //spravuj seznam cviků
                     IconButton(onClick = {
-
+                        parentController.navigate("workOutPlan/${workOutPlan.trainingListEntityId}")
                     }) {
 
                         Icon(

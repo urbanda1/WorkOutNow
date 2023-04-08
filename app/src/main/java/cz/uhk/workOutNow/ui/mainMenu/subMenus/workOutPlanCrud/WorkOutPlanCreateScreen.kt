@@ -46,7 +46,7 @@ fun WorkOutPlanCreateScreen(
     ) {
 
         Canvas(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxWidth()
         ) {
             val canvasWidth = size.width
             drawLine(
@@ -59,9 +59,7 @@ fun WorkOutPlanCreateScreen(
     }
 
     Column(
-        modifier = Modifier.offset(60.dp, 20.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.Start,
+        modifier = Modifier.offset(60.dp, 20.dp)
 
         ) {
         Text(
@@ -79,7 +77,8 @@ fun WorkOutPlanCreateScreen(
         icon.value = selectedItem
 
         Row(
-
+            modifier = Modifier.offset(0.dp, 0.dp).fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start,
         ) {
             IconButton(onClick = {
                 valueMenu = true
@@ -112,7 +111,7 @@ fun WorkOutPlanCreateScreen(
 
         //zobrazení ikony při vytváření plánu work outu
         Row(
-            modifier = Modifier.offset(90.dp, 0.dp)
+            modifier = Modifier.offset(100.dp, 0.dp)
         ) {
             when (selectedItem) {
                 "Acrobatics" -> Icon(

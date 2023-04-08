@@ -33,10 +33,11 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun WorkOutTrainingsScreen(
     parentController: NavHostController,
+    id: Long,
     viewModel: WorkOutTrainingsViewModel = getViewModel()
 ) {
 
-  //  val trainings = viewModel.trainingListEntity.collectAsState(emptyList())
+    val trainings = viewModel.selectAllTrainings(id).collectAsState(emptyList())
 
     Row(
         modifier = Modifier.offset(0.dp, 10.dp)
@@ -56,19 +57,31 @@ fun WorkOutTrainingsScreen(
         }
     }
 
-
     Column {
-    /*    LazyColumn(
+        Row(
+            modifier = Modifier
+                .offset(0.dp, 20.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+
+        ) {
+
+            IconButton(onClick = { parentController.navigateHomeScreen() })
+            {
+                Icon(Icons.Default.ArrowBack, contentDescription = "")
+            }
+        }
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(2f)
                 .offset(0.dp, 15.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items(workOutPlans.value) { workOutPlan ->
+            items(trainings.value) { training ->
 
                 Text(
-                    text = workOutPlan.title,
+                    text = training.name,
                     style = TextStyle(
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp,
@@ -80,11 +93,11 @@ fun WorkOutTrainingsScreen(
                 )
 
                 Text(
-                    text = workOutPlan.description,
+                    text = "Délka tréninku: " + training.duration,
                     modifier = Modifier.padding(0.dp, 10.dp)
                 )
 
-                when (workOutPlan.icon) {
+/*                when (training.icon) {
                     "Acrobatics" -> Icon(
                         painterResource(id = R.drawable.workoutplanacrobatics),
                         "Acrobatics",
@@ -100,7 +113,7 @@ fun WorkOutTrainingsScreen(
                         "Weights",
                         modifier = Modifier.offset(0.dp, 0.dp)
                     )
-                }
+                }*/
 
                 //řada možností pro lazy item
                 Row(
@@ -111,7 +124,7 @@ fun WorkOutTrainingsScreen(
                 {
                     //vymaz lazy item
                     IconButton(onClick = {
-                        viewModel.deleteTrainingListEntity(workOutPlan)
+                        viewModel.deleteTraining(training)
                     }) {
 
                         Icon(
@@ -123,7 +136,7 @@ fun WorkOutTrainingsScreen(
 
                     //uprav lazy item
                     IconButton(onClick = {
-                        parentController.navigate("edit/${workOutPlan.trainingListEntityId}")
+                        //      parentController.navigate("edit/${workOutPlan.trainingListEntityId}")
                     }) {
 
                         Icon(
@@ -132,32 +145,9 @@ fun WorkOutTrainingsScreen(
                             tint = Color.Unspecified // toto nastavení zachová původní barvu
                         )
                     }
-
-                    //spravuj seznam cviků
-                    IconButton(onClick = {
-
-                    }) {
-
-                        Icon(
-                            (Icons.Default.List), contentDescription = "",
-                            modifier = Modifier.offset(-(0.dp), (0.dp)),
-                            tint = Color.Unspecified // toto nastavení zachová původní barvu
-                        )
-                    }
-
-                    // spust cviky
-                    IconButton(onClick = {
-
-                    }) {
-                        Icon(
-                            (Icons.Default.PlayArrow), contentDescription = "",
-                            modifier = Modifier.offset(-(0.dp), (0.dp)),
-                            tint = Color.Unspecified // toto nastavení zachová původní barvu
-                        )
-                    }
                 }
             }
-        }*/
+        }
 
         Row(
             modifier = Modifier.offset(0.dp, 30.dp)

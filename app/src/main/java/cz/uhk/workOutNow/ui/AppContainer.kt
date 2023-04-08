@@ -6,6 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import cz.uhk.workOutNow.ui.mainMenu.SettingsScreen
 import cz.uhk.workOutNow.ui.mainMenu.WorkOutPlanMenuScreen
+import cz.uhk.workOutNow.ui.mainMenu.WorkOutTrainingsScreen
+
 import cz.uhk.workOutNow.ui.mainMenu.subMenus.workOutPlanCrud.WorkOutPlanCreateScreen
 import cz.uhk.workOutNow.ui.mainMenu.subMenus.workOutPlanCrud.WorkOutPlanEditScreen
 
@@ -55,11 +57,21 @@ fun AppContainer(
         // spouštění plánu zatím to plánuju tak, že to bude renderovat cviky a všechno na jedné stránce
         // podle seznamu
 
-/*        composable(
-            route = DestinationWorkOutMainMenuCreate,
-        ) {
-            WorkOutCreateScreen(parentController = controller)
-        }*/
+        composable(
+            route = DestinationWorkOutTraining,
+        ) {backStackEntry ->
+            val idWorkOutPlanString = backStackEntry.arguments?.getString("id")
+
+            val idWorkOutPlan = idWorkOutPlanString?.toLong()
+
+            WorkOutTrainingsScreen(controller, idWorkOutPlan!!)
+        }
+
+        //TODO
+        // create insert training route
+
+        //TODO
+        // create update training route
 
     }
 }
@@ -88,10 +100,12 @@ private const val DestinationHome = "Home"
 private const val DestinationWorkOutPlanMainMenu = "Set up plan"
 private const val DestinationSettings = "Settings"
 
-private const val DestinationWorkOutMainMenuCreate = "Create Work Out Type"
-
 //Other Screens
+//Crud workout Plan
 private const val DestinationWorkOutPlanCreate = "Create Work Out Plan Menu"
 private const val DestinationWorkOutPlanEdit = "edit/{id}"
+
+//crud work out
+private const val DestinationWorkOutTraining = "workOutPlan/{id}"
 
 
