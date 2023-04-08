@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">UMTE</string>
+
+    <string name="form_screen_title">Vyplňte form</string>
+    <string name="form_screen_input_name">Jméno</string>
+    <string name="form_screen_input_age">Věk</string>
+    <string name="form_screen_select_gender">Pohlaví</string>
+    <string name="form_screen_select_gender_man">Muž</string>
+    <string name="form_screen_select_gender_woman">Žena</string>
+    <string name="form_screen_select_gender_undefined">Nevybráno</string>
+    <string name="form_screen_btn_finish">Dokončit</string>
+</resources>

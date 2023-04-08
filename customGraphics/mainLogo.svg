@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="640" height="640" viewBox="0 0 640 640" xml:space="preserve">
+<desc>Created with Fabric.js 4.6.0</desc>
+<defs>
+</defs>
+<g transform="matrix(0.21 0 0 0.21 320 320)" id="vpyPsPL5CXWSI6Qd5slwQ"  >
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke"  transform=" translate(-480.5, -575.5)" d="M 826 471 L 784 429 L 829 384 L 672 227 L 627 272 L 584 229 L 614 198 Q 637 175 671 175.5 Q 705 176 728 199 L 857 328 Q 880 351 880 384.5 Q 880 418 857 441 L 826 471 Z M 346 952 Q 323 975 289.5 975 Q 256 975 233 952 L 90 809 Q 73 791.622 73 766.311 Q 73 741.0000000000001 90 724 L 134 680 L 177 722 L 132 767 L 289 924 L 334 879 L 376 922 L 346 952 Z M 743 644 L 828 559 L 497 228 L 412 313 L 743 644 Z M 463 924 L 549 838 L 218 507 L 132 593 L 463 924 Z M 472 676 L 581 567 L 489 475 L 380 584 L 472 676 Z M 505 966 Q 488.066 983 463.033 983 Q 438 983 421 966 L 90 635 Q 73 618.066 73 593.033 Q 73 568 90 551 L 175 465 Q 192.378 448 217.689 448 Q 243 448 260 465 L 337 542 L 447 432 L 370 355 Q 353 338.066 353 313.033 Q 353 288 370 271 L 455 185 Q 472.378 168 497.689 168 Q 523 168 540 185 L 871 516 Q 888 533.378 888 558.689 Q 888 583.9999999999999 871 601 L 785 686 Q 768.066 703 743.033 703 Q 718 703 701 686 L 624 609 L 514 719 L 591 796 Q 608 813.378 608 838.689 Q 608 863.9999999999999 591 881 L 505 966 Z" stroke-linecap="round" />
+</g>
+<g transform="matrix(4.18 0 0 4.18 320 320)" id="8w-0LC4f_dhnuBijI8DVK"  >
+<path style="stroke: rgb(219,10,19); stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke"  transform=" translate(0, 0)" d="M 0 -34.44564 C 19.01399 -34.44564 34.44564 -19.01399 34.44564 0 C 34.44564 19.01399 19.01399 34.44564 0 34.44564 C -19.01399 34.44564 -34.44564 19.01399 -34.44564 0 C -34.44564 -19.01399 -19.01399 -34.44564 0 -34.44564 z" stroke-linecap="round" />
+</g>
+</svg>
