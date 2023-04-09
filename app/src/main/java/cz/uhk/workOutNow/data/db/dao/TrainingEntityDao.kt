@@ -12,15 +12,19 @@ interface TrainingEntityDao {
     @Query("SELECT * FROM TrainingEntity WHERE trainingListEntityId = :trainingListEntityId")
     fun selectAllTrainingsOfSpecificList(trainingListEntityId: Long): Flow<List<TrainingEntity>>
 
+    @Query("SELECT * FROM TrainingEntity WHERE trainingEntityId = :trainingEntityId")
+    fun selectTrainingForEdit(trainingEntityId: Long): Flow<TrainingEntity>
+
     //insert
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertOrUpdateTrainingEntity(trainingEntity: TrainingEntity)
 
     //update custom
-    @Query("UPDATE TrainingEntity set name = :name, duration = :duration, icon = :icon WHERE trainingEntityId = :trainingEntityId")
+    @Query("UPDATE TrainingEntity set name = :name, minutes = :minutes, seconds = :seconds, icon = :icon WHERE trainingEntityId = :trainingEntityId")
     fun updateTrainingEntityQuery(
         name: String,
-        duration: Long,
+        minutes: Int,
+        seconds: Int,
         icon: String,
         trainingEntityId: Long
     )

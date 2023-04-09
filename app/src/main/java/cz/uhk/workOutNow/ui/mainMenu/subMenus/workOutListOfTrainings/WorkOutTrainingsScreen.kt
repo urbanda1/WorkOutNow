@@ -66,11 +66,12 @@ fun WorkOutTrainingsScreen(
 
         ) {
 
-            IconButton(onClick = { parentController.navigateHomeScreen() })
+            IconButton(onClick = { parentController.navigateWorkOutPlanMainMenu() })
             {
                 Icon(Icons.Default.ArrowBack, contentDescription = "")
             }
         }
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -93,27 +94,37 @@ fun WorkOutTrainingsScreen(
                 )
 
                 Text(
-                    text = "Délka tréninku: " + training.duration,
+                    text = "Délka tréninku: " + training.minutes + ":" + training.seconds,
                     modifier = Modifier.padding(0.dp, 10.dp)
                 )
 
-/*                when (training.icon) {
-                    "Acrobatics" -> Icon(
-                        painterResource(id = R.drawable.workoutplanacrobatics),
-                        "Acrobatics",
+                when (training.icon) {
+                    "Plank" -> Icon(
+                        painterResource(id = R.drawable.trainingplank),
+                        "Plank",
                         modifier = Modifier.offset(0.dp, 0.dp)
                     )
-                    "Sprint" -> Icon(
-                        painterResource(id = R.drawable.workoutplansprint),
-                        "Sprint",
+                    "Push Ups" -> Icon(
+                        painterResource(id = R.drawable.trainingpushups),
+                        "Push Ups",
+                        modifier = Modifier.offset(0.dp, 0.dp)
+                    )
+                    "Resting" -> Icon(
+                        painterResource(id = R.drawable.trainingresting),
+                        "Resting",
+                        modifier = Modifier.offset(0.dp, 0.dp)
+                    )
+                    "Bench Press" -> Icon(
+                        painterResource(id = R.drawable.trainingbenchpress),
+                        "Bench Press",
                         modifier = Modifier.offset(0.dp, 0.dp)
                     )
                     "Weights" -> Icon(
-                        painterResource(id = R.drawable.workoutplanweights),
-                        "Weights",
+                        painterResource(id = R.drawable.trainingweightsbig),
+                        "Big Weights",
                         modifier = Modifier.offset(0.dp, 0.dp)
                     )
-                }*/
+                }
 
                 //řada možností pro lazy item
                 Row(
@@ -136,7 +147,7 @@ fun WorkOutTrainingsScreen(
 
                     //uprav lazy item
                     IconButton(onClick = {
-                        //      parentController.navigate("edit/${workOutPlan.trainingListEntityId}")
+                        parentController.navigate("workOutPlan/${id}/edit/${training.trainingEntityId}")
                     }) {
 
                         Icon(
@@ -202,7 +213,7 @@ fun WorkOutTrainingsScreen(
             }
 
             Button(
-                onClick = { parentController.navigateWorkOutPlanCreate() },
+                onClick = { parentController.navigate("workOutPlan/${id}/create") },
                 shape = CircleShape,
                 modifier = Modifier
                     .size(64.dp)
@@ -210,7 +221,6 @@ fun WorkOutTrainingsScreen(
             ) {
                 Icon(Icons.Default.Add, contentDescription = "")
             }
-
 
             IconButton(onClick = {
                 parentController.navigateDestinationSettings()

@@ -4,6 +4,8 @@ import androidx.room.Room
 import cz.uhk.workOutNow.data.db.AppDatabase
 import cz.uhk.workOutNow.ui.mainMenu.WorkOutPlanMenuViewModel
 import cz.uhk.workOutNow.ui.mainMenu.WorkOutTrainingsViewModel
+import cz.uhk.workOutNow.ui.mainMenu.subMenus.workOutListOfTrainings.crud.TrainingCreateViewModel
+import cz.uhk.workOutNow.ui.mainMenu.subMenus.workOutListOfTrainings.crud.TrainingEditViewModel
 import cz.uhk.workOutNow.ui.mainMenu.subMenus.workOutPlanCrud.WorkOutPlanCreateViewModel
 import cz.uhk.workOutNow.ui.mainMenu.subMenus.workOutPlanCrud.WorkOutPlanEditViewModel
 import org.koin.android.ext.koin.androidApplication
@@ -28,4 +30,6 @@ val uiModule = module {
     viewModel { WorkOutPlanEditViewModel(get()) }
 
     viewModel { WorkOutTrainingsViewModel(get()) }
+    viewModel { TrainingCreateViewModel(get()) }
+    viewModel { TrainingEditViewModel(get()) }
 }

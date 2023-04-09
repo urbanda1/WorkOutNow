@@ -1,4 +1,4 @@
-package cz.uhk.workOutNow.ui.mainMenu.subMenus.workOutPlanCrud
+package cz.uhk.workOutNow.ui.mainMenu.subMenus.workOutListOfTrainings.crud
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
@@ -18,46 +18,37 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import cz.uhk.workOutNow.R
-import cz.uhk.workOutNow.data.db.entities.TrainingListEntity
+import cz.uhk.workOutNow.data.db.entities.TrainingEntity
 import cz.uhk.workOutNow.ui.*
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun WorkOutPlanEditScreen(
+fun TrainingCreateScreen(
     parentController: NavHostController,
     id: Long,
-    viewModel: WorkOutPlanEditViewModel = getViewModel()
+    viewModel: TrainingCreateViewModel = getViewModel()
 ) {
 
-    val workOutPlan: State<TrainingListEntity> =
-        viewModel.selectTrainingEntityForEdit(id).collectAsState(
-            initial =
-            TrainingListEntity(trainingListEntityId = 0, title = "", description = "", icon = "")
-        )
-
-    val title = remember { mutableStateOf("") }
-    val helpTitle = remember { mutableStateOf("") }
-
-    val description = remember { mutableStateOf("") }
-    val helpDescription = remember { mutableStateOf("") }
-
+    val name = remember { mutableStateOf("") }
+    val minutes = remember { mutableStateOf("") }
+    val seconds = remember { mutableStateOf("") }
     val icon = remember { mutableStateOf("") }
-    val helpIcon = remember { mutableStateOf("") }
 
     var valueMenu by remember { mutableStateOf(false) }
 
-    val items = listOf("Acrobatics", "Sprint", "Weights")
+    val items = listOf("Plank", "Push Ups", "Resting", "Bench Press", "Weights")
     var selectedItem by remember { mutableStateOf(items[0]) }
 
     // Ikony chci schovat, pokud bude zobrazena, pokud uživatel něco napíše
-    val isVisible = isMenuVisible(title, description, helpTitle, helpDescription)
+    val isVisible = menuVisible(name, minutes, seconds)
 
     Row(
         modifier = Modifier.offset(0.dp, 10.dp)
 
     ) {
+
         Canvas(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxWidth()
         ) {
             val canvasWidth = size.width
             drawLine(
@@ -73,43 +64,28 @@ fun WorkOutPlanEditScreen(
         modifier = Modifier.offset(60.dp, 20.dp)
 
     ) {
-        Text(
-            text = "Modify existing work out plan", modifier = Modifier.offset(70.dp, 0.dp)
-        )
 
-        //z nějakého důvodu se proměnná workOutPlan.value... neukládá do mutableStateOf, řešeno takto amatérsky
-        if (title.value == "" && helpTitle.value == "") {
-            title.value = workOutPlan.value.title
+        Row(
+
+        ) {
+            Text(
+                text = "Create new training", modifier = Modifier.offset(50.dp, 0.dp)
+            )
         }
 
-        if (description.value == "" && helpDescription.value == "") {
-            description.value = workOutPlan.value.description
-        }
+        OutlinedTextField(value = name.value,
+            onValueChange = { name.value = it },
+            label = { Text("Set the name") })
 
-        OutlinedTextField(value = title.value,
-            onValueChange = {
-                title.value = it
-                helpTitle.value = "Done"
-                helpDescription.value = "Done"
-                helpIcon.value = "Done"
-            },
-            label = { Text("Set the title") })
+        OutlinedTextField(value = minutes.value,
+            onValueChange = { minutes.value = it },
+            label = { Text("Set the duration - minutes") })
 
-        OutlinedTextField(value = description.value,
-            onValueChange = {
-                description.value = it
-                helpTitle.value = "Done"
-                helpDescription.value = "Done"
-                helpIcon.value = "Done"
-            },
-            label = { Text("Set the description") })
-
-        if (icon.value == "" && helpIcon.value == "") {
-            selectedItem = workOutPlan.value.icon
-        }
+        OutlinedTextField(value = seconds.value,
+            onValueChange = { seconds.value = it },
+            label = { Text("Set the duration - seconds") })
 
         icon.value = selectedItem
-
 
         Row(
             modifier = Modifier
@@ -127,7 +103,7 @@ fun WorkOutPlanEditScreen(
                 )
 
                 Text(
-                    text = selectedItem, modifier = Modifier.offset(80.dp, 0.dp)
+                    text = "" + selectedItem, modifier = Modifier.offset(80.dp, 0.dp)
                 )
             }
 
@@ -138,9 +114,6 @@ fun WorkOutPlanEditScreen(
                 items.forEach { item ->
                     DropdownMenuItem(onClick = {
                         selectedItem = item
-                        helpTitle.value = "Done"
-                        helpDescription.value = "Done"
-                        helpIcon.value = "Done"
                         valueMenu = false
                     }) {
                         Text(text = item)
@@ -149,69 +122,94 @@ fun WorkOutPlanEditScreen(
             }
         }
 
-        //zobrazení ikony při vytváření plánu work outu
         Row(
-            modifier = Modifier.offset(100.dp, 0.dp)
+            modifier = Modifier
+                .offset(100.dp, 0.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start,
         ) {
-            when (selectedItem) {
-                "Acrobatics" -> Icon(
-                    painterResource(id = R.drawable.workoutplanacrobatics),
-                    "Acrobatics",
+            //zobrazení ikony při vytváření plánu work outu
+            when (icon.value) {
+                "Plank" -> Icon(
+                    painterResource(id = R.drawable.trainingplank),
+                    "Plank",
                     modifier = Modifier.offset(0.dp, 0.dp)
                 )
-                "Sprint" -> Icon(
-                    painterResource(id = R.drawable.workoutplansprint),
-                    "Sprint",
+                "Push Ups" -> Icon(
+                    painterResource(id = R.drawable.trainingpushups),
+                    "Push Ups",
+                    modifier = Modifier.offset(0.dp, 0.dp)
+                )
+                "Resting" -> Icon(
+                    painterResource(id = R.drawable.trainingresting),
+                    "Resting",
+                    modifier = Modifier.offset(0.dp, 0.dp)
+                )
+                "Bench Press" -> Icon(
+                    painterResource(id = R.drawable.trainingbenchpress),
+                    "Bench Press",
                     modifier = Modifier.offset(0.dp, 0.dp)
                 )
                 "Weights" -> Icon(
-                    painterResource(id = R.drawable.workoutplanweights),
-                    "Weights",
+                    painterResource(id = R.drawable.trainingweightsbig),
+                    "Big Weights",
                     modifier = Modifier.offset(0.dp, 0.dp)
                 )
             }
         }
 
-
         Row(
         ) {
             Button(
                 onClick = {
-
-                    viewModel.updateTrainingListEntity(
-                        title.value,
-                        workOutPlan.value.trainingListEntityId,
-                        description.value,
-                        icon.value
+                    val trainingEntity = TrainingEntity(
+                        name = name.value,
+                        minutes = minutes.value.toInt(),
+                        seconds = seconds.value.toInt(),
+                        icon = icon.value,
+                        trainingListEntityId = id
                     )
-
-                    parentController.navigateWorkOutPlanMainMenu()
+                    viewModel.createTrainingListEntity(trainingEntity)
+                    parentController.navigate("workOutPlan/${id}")
                 },
-                enabled = title.value.isNotEmpty() && description.value.isNotEmpty() && icon.value.isNotEmpty(),
+                enabled = name.value.isNotEmpty()
+                        && minutes.value.isNotEmpty()
+                        && seconds.value.isNotEmpty()
+                        && icon.value.isNotEmpty(),
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .offset(20.dp, 0.dp)
+                    .offset(10.dp, 0.dp)
             ) {
-                Text("Save changes")
+                Text("Save")
             }
 
             Button(
                 onClick = {
-                    title.value = ""
-                    description.value = ""
-                    icon.value = ""
-
-                    helpTitle.value = "Done"
-                    helpDescription.value = "Done"
-                    helpIcon.value = "Done"
+                    name.value = ""
+                    minutes.value = ""
+                    seconds.value = ""
                 },
-                enabled = title.value.isNotEmpty() || description.value.isNotEmpty(),
+                enabled = name.value.isNotEmpty()
+                        || minutes.value.isNotEmpty()
+                        || seconds.value.isNotEmpty(),
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .offset(40.dp, 0.dp)
+                    .offset(30.dp, 0.dp)
             ) {
                 Text("Delete")
             }
+
+            Button(
+                onClick = {
+                    parentController.navigate("workOutPlan/${id}")
+                },
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .offset(50.dp, 0.dp)
+            ) {
+                Text("Back")
+            }
+
         }
     }
 
@@ -345,12 +343,11 @@ fun WorkOutPlanEditScreen(
     }
 }
 
-fun isMenuVisible(
-    title: MutableState<String>,
-    description: MutableState<String>,
-    helpTitle: MutableState<String>,
-    helpDescription: MutableState<String>
+
+fun menuVisible(
+    name: MutableState<String>, minutes: MutableState<String>, seconds: MutableState<String>
 ): Boolean {
-    return !(title.value.isNotEmpty() && helpTitle.value == "Done" || description.value.isNotEmpty() && helpDescription.value == "Done")
+    return !(name.value.isNotEmpty() || minutes.value.isNotEmpty() || seconds.value.isNotEmpty())
 }
+
 
