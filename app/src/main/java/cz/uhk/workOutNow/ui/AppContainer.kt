@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import cz.uhk.workOutNow.ui.mainMenu.LaunchTrainingScreen
 import cz.uhk.workOutNow.ui.mainMenu.SettingsScreen
 import cz.uhk.workOutNow.ui.mainMenu.WorkOutPlanMenuScreen
 import cz.uhk.workOutNow.ui.mainMenu.WorkOutTrainingsScreen
@@ -55,10 +56,6 @@ fun AppContainer(
             WorkOutPlanEditScreen(controller, idTraining!!)
         }
 
-        //TODO
-        // spouštění plánu zatím to plánuju tak, že to bude renderovat cviky a všechno na jedné stránce
-        // podle seznamu
-
         composable(
             route = DestinationWorkOutTraining,
         ) { backStackEntry ->
@@ -67,6 +64,16 @@ fun AppContainer(
             val idWorkOutPlan = idWorkOutPlanString?.toLong()
 
             WorkOutTrainingsScreen(controller, idWorkOutPlan!!)
+        }
+
+        composable(
+            route = DestinationWorkOutTrainingLaunch,
+        ) { backStackEntry ->
+            val idWorkOutPlanString = backStackEntry.arguments?.getString("idPlan")
+
+            val idWorkOutPlan = idWorkOutPlanString?.toLong()
+
+            LaunchTrainingScreen(controller, idWorkOutPlan!!)
         }
 
         composable(
@@ -91,6 +98,8 @@ fun AppContainer(
 
             TrainingEditScreen(controller, idWorkOutPlan!!, idTraining!!)
         }
+
+
 
     }
 }
@@ -128,5 +137,6 @@ private const val DestinationWorkOutPlanEdit = "edit/{id}"
 private const val DestinationWorkOutTraining = "workOutPlan/{id}"
 private const val DestinationWorkOutTrainingCreate = "workOutPlan/{idPlan}/create"
 private const val DestinationWorkOutTrainingEdit = "workOutPlan/{idPlan}/edit/{idTraining}"
+private const val DestinationWorkOutTrainingLaunch = "workOutPlan/{idPlan}/launch"
 
 

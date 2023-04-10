@@ -59,23 +59,47 @@ fun TrainingEditScreen(
     val items = listOf("Plank", "Push Ups", "Resting", "Bench Press", "Weights")
     var selectedItem by remember { mutableStateOf(items[0]) }
 
+    var displayWarningMessage = remember { mutableStateOf(false) }
+
     // Ikony chci schovat, pokud bude zobrazena, pokud uživatel něco napíše
     val isVisible = menuVisible(name, minutes, seconds, helpName, helpMinutes, helpSeconds)
 
-    Row(
-        modifier = Modifier.offset(0.dp, 10.dp)
+    if (!displayWarningMessage.value) {
+        Row(
+            modifier = Modifier.offset(0.dp, 10.dp)
 
-    ) {
-
-        Canvas(
-            modifier = Modifier.fillMaxWidth()
         ) {
-            val canvasWidth = size.width
-            drawLine(
-                start = Offset(x = 0f, y = 0f),
-                end = Offset(x = canvasWidth, y = 0f),
-                color = Color(0xFFDB0A13),
-                strokeWidth = 10f
+
+            Canvas(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                val canvasWidth = size.width
+                drawLine(
+                    start = Offset(x = 0f, y = 0f),
+                    end = Offset(x = canvasWidth, y = 0f),
+                    color = Color(0xFFDB0A13),
+                    strokeWidth = 10f
+                )
+            }
+        }
+    } else {
+
+        Row(
+            modifier = Modifier
+                .offset(0.dp, -3.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Minutes and seconds must be numbers (0-9)!",
+                modifier = Modifier.offset(-(0.dp), (0.dp)),
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Default,
+                    fontSize = 20.sp,
+                    letterSpacing = 0.sp,
+                    color = Color(0xFFDB0A13)
+                )
             )
         }
     }
@@ -219,15 +243,21 @@ fun TrainingEditScreen(
             Button(
                 onClick = {
 
-                    viewModel.updateTrainingEntityQuery(
-                        name.value,
-                        minutes = minutes.value.toInt(),
-                        seconds = seconds.value.toInt(),
-                        icon = icon.value,
-                        trainingEntityId = idTraining
-                    )
+                    // kontrola vstupních hodnot
+                    val regex = Regex("[0-9]*")
+                    if (!((regex.matches(minutes.value)) && (regex.matches(seconds.value)))) {
+                        displayWarningMessage.value = true
+                    } else {
 
-                    parentController.navigate("workOutPlan/${idWorkOutPlan}")
+                        viewModel.updateTrainingEntityQuery(
+                            name.value,
+                            minutes = minutes.value.toInt(),
+                            seconds = seconds.value.toInt(),
+                            icon = icon.value,
+                            trainingEntityId = idTraining
+                        )
+                        parentController.navigate("workOutPlan/${idWorkOutPlan}")
+                    }
                 },
                 enabled = name.value.isNotEmpty()
                         && minutes.value.isNotEmpty()

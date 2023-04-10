@@ -190,7 +190,7 @@ fun WorkOutPlanEditScreen(
                 enabled = title.value.isNotEmpty() && description.value.isNotEmpty() && icon.value.isNotEmpty(),
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .offset(20.dp, 0.dp)
+                    .offset(-20.dp, 0.dp)
             ) {
                 Text("Save changes")
             }
@@ -208,9 +208,20 @@ fun WorkOutPlanEditScreen(
                 enabled = title.value.isNotEmpty() || description.value.isNotEmpty(),
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .offset(40.dp, 0.dp)
+                    .offset(0.dp, 0.dp)
             ) {
                 Text("Delete")
+            }
+
+            Button(
+                onClick = {
+                    parentController.navigateWorkOutPlanMainMenu()
+                },
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .offset(20.dp, 0.dp)
+            ) {
+                Text("Back")
             }
         }
     }

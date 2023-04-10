@@ -6,19 +6,17 @@ import cz.uhk.workOutNow.data.db.entities.TrainingEntity
 import cz.uhk.workOutNow.data.db.entities.TrainingListEntity
 import kotlinx.coroutines.flow.Flow
 
-class WorkOutPlanMenuViewModel(
+class LaunchTrainingViewModel(
     private val trainingEntityDao: TrainingEntityDao
 ) : BaseViewModel() {
-
-    val trainingListEntity = trainingEntityDao.selectAllTrainingEntityList()
 
     fun selectAllTrainings(trainingListEntityId: Long): Flow<List<TrainingEntity>> {
         return trainingEntityDao.selectAllTrainingsOfSpecificList(trainingListEntityId)
     }
-    fun deleteTrainingListEntity(trainingListEntity: TrainingListEntity) {
 
-        launch {
-            trainingEntityDao.deleteTrainingListEntity(trainingListEntity)
-        }
+    fun selectTrainingPlan(trainingListEntityId: Long): Flow<TrainingListEntity> {
+        return trainingEntityDao.selectTrainingEntityForEdit(trainingListEntityId)
     }
 }
+
+

@@ -61,7 +61,7 @@ fun WorkOutPlanCreateScreen(
     Column(
         modifier = Modifier.offset(60.dp, 20.dp)
 
-        ) {
+    ) {
         Text(
             text = "Create new work out plan", modifier = Modifier.offset(70.dp, 0.dp)
         )
@@ -77,7 +77,9 @@ fun WorkOutPlanCreateScreen(
         icon.value = selectedItem
 
         Row(
-            modifier = Modifier.offset(0.dp, 0.dp).fillMaxWidth(),
+            modifier = Modifier
+                .offset(0.dp, 0.dp)
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.Start,
         ) {
             IconButton(onClick = {
@@ -247,38 +249,6 @@ fun WorkOutPlanCreateScreen(
 
             }
         }
-
-
-        //Zrušeno z menu
-/*    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .offset(67.dp, (29.dp)),
-        contentAlignment = Alignment.BottomCenter,
-    ) {
-        IconButton(onClick = {
-            parentController.navigateWorkOutMainMenu()
-        }) {
-            Icon(
-                painterResource(R.drawable.weightsmenu), contentDescription = "",
-                modifier = Modifier.offset(-(25.dp), -(1.dp)),
-                tint = Color.Unspecified // toto nastavení zachová původní barvu
-            )
-
-            Text(
-                text = "Create Exercise",
-                modifier = Modifier.offset(-(20.dp), (35.dp)),
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.SansSerif,
-                    fontSize = 20.sp,
-                    letterSpacing = 0.sp,
-                    color = Color(0xFF000000)
-                )
-            )
-
-        }
-    }*/
 
         Box(
             modifier = Modifier

@@ -34,6 +34,8 @@ fun TrainingCreateScreen(
     val seconds = remember { mutableStateOf("") }
     val icon = remember { mutableStateOf("") }
 
+    var displayWarningMessage = remember { mutableStateOf(false) }
+
     var valueMenu by remember { mutableStateOf(false) }
 
     val items = listOf("Plank", "Push Ups", "Resting", "Bench Press", "Weights")
@@ -42,20 +44,42 @@ fun TrainingCreateScreen(
     // Ikony chci schovat, pokud bude zobrazena, pokud uživatel něco napíše
     val isVisible = menuVisible(name, minutes, seconds)
 
-    Row(
-        modifier = Modifier.offset(0.dp, 10.dp)
+    if (!displayWarningMessage.value) {
+        Row(
+            modifier = Modifier.offset(0.dp, 10.dp)
 
-    ) {
-
-        Canvas(
-            modifier = Modifier.fillMaxWidth()
         ) {
-            val canvasWidth = size.width
-            drawLine(
-                start = Offset(x = 0f, y = 0f),
-                end = Offset(x = canvasWidth, y = 0f),
-                color = Color(0xFFDB0A13),
-                strokeWidth = 10f
+
+            Canvas(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                val canvasWidth = size.width
+                drawLine(
+                    start = Offset(x = 0f, y = 0f),
+                    end = Offset(x = canvasWidth, y = 0f),
+                    color = Color(0xFFDB0A13),
+                    strokeWidth = 10f
+                )
+            }
+        }
+    } else {
+
+        Row(
+            modifier = Modifier
+                .offset(0.dp, -3.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Minutes and seconds must be numbers (0-9)!",
+                modifier = Modifier.offset(-(0.dp), (0.dp)),
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Default,
+                    fontSize = 20.sp,
+                    letterSpacing = 0.sp,
+                    color = Color(0xFFDB0A13)
+                )
             )
         }
     }
@@ -162,20 +186,29 @@ fun TrainingCreateScreen(
         ) {
             Button(
                 onClick = {
-                    val trainingEntity = TrainingEntity(
-                        name = name.value,
-                        minutes = minutes.value.toInt(),
-                        seconds = seconds.value.toInt(),
-                        icon = icon.value,
-                        trainingListEntityId = id
-                    )
-                    viewModel.createTrainingListEntity(trainingEntity)
-                    parentController.navigate("workOutPlan/${id}")
+
+                    // kontrola vstupních hodnot
+                    val regex = Regex("[0-9]*")
+                    if (!((regex.matches(minutes.value)) && (regex.matches(seconds.value)))) {
+                        displayWarningMessage.value = true
+                    } else {
+                        val trainingEntity = TrainingEntity(
+                            name = name.value,
+                            minutes = minutes.value.toInt(),
+                            seconds = seconds.value.toInt(),
+                            icon = icon.value,
+                            trainingListEntityId = id
+                        )
+                        viewModel.createTrainingListEntity(trainingEntity)
+                        parentController.navigate("workOutPlan/${id}")
+                    }
                 },
                 enabled = name.value.isNotEmpty()
                         && minutes.value.isNotEmpty()
                         && seconds.value.isNotEmpty()
                         && icon.value.isNotEmpty(),
+
+
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .offset(10.dp, 0.dp)

@@ -2,6 +2,8 @@ package cz.uhk.workOutNow.di
 
 import androidx.room.Room
 import cz.uhk.workOutNow.data.db.AppDatabase
+import cz.uhk.workOutNow.ui.mainMenu.LaunchTrainingScreen
+import cz.uhk.workOutNow.ui.mainMenu.LaunchTrainingViewModel
 import cz.uhk.workOutNow.ui.mainMenu.WorkOutPlanMenuViewModel
 import cz.uhk.workOutNow.ui.mainMenu.WorkOutTrainingsViewModel
 import cz.uhk.workOutNow.ui.mainMenu.subMenus.workOutListOfTrainings.crud.TrainingCreateViewModel
@@ -32,4 +34,6 @@ val uiModule = module {
     viewModel { WorkOutTrainingsViewModel(get()) }
     viewModel { TrainingCreateViewModel(get()) }
     viewModel { TrainingEditViewModel(get()) }
+    viewModel { LaunchTrainingViewModel(get()) }
+
 }

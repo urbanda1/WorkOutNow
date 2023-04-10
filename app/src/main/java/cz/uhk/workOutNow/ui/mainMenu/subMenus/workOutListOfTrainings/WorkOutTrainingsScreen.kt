@@ -94,7 +94,11 @@ fun WorkOutTrainingsScreen(
                 )
 
                 Text(
-                    text = "Délka tréninku: " + training.minutes + ":" + training.seconds,
+                    text = "Délka tréninku: " + "${"%02d".format(training.minutes)}:${
+                        "%02d".format(
+                            training.seconds
+                        )
+                    }",
                     modifier = Modifier.padding(0.dp, 10.dp)
                 )
 

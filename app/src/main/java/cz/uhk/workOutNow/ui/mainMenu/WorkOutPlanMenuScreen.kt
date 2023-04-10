@@ -13,6 +13,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -37,6 +39,8 @@ fun WorkOutPlanMenuScreen(
 
     val workOutPlans = viewModel.trainingListEntity.collectAsState(emptyList())
 
+    val displayWarningText = remember { mutableStateOf(false) }
+
     Row(
         modifier = Modifier.offset(0.dp, 10.dp)
 
@@ -55,7 +59,6 @@ fun WorkOutPlanMenuScreen(
         }
     }
 
-
     Column {
         LazyColumn(
             modifier = Modifier
@@ -65,6 +68,11 @@ fun WorkOutPlanMenuScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(workOutPlans.value) { workOutPlan ->
+
+                val trainings =
+                    viewModel.selectAllTrainings(workOutPlan.trainingListEntityId).collectAsState(
+                        initial = emptyList()
+                    )
 
                 Text(
                     text = workOutPlan.title,
@@ -146,7 +154,11 @@ fun WorkOutPlanMenuScreen(
 
                     // spust cviky
                     IconButton(onClick = {
-
+                        if (trainings.value.isNotEmpty()) {
+                            parentController.navigate("workOutPlan/${workOutPlan.trainingListEntityId}/launch")
+                        } else {
+                            displayWarningText.value = true
+                        }
                     }) {
                         Icon(
                             (Icons.Default.PlayArrow), contentDescription = "",
@@ -155,6 +167,26 @@ fun WorkOutPlanMenuScreen(
                         )
                     }
                 }
+            }
+        }
+
+        if (displayWarningText.value) {
+            Row(
+                modifier = Modifier.offset(0.dp, 10.dp)
+                    .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "Warning, this training list is empty!",
+                    modifier = Modifier.offset(-(0.dp), (0.dp)),
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = FontFamily.Default,
+                        fontSize = 20.sp,
+                        letterSpacing = 0.sp,
+                        color = Color(0xFFDB0A13)
+                    )
+                )
             }
         }
 
