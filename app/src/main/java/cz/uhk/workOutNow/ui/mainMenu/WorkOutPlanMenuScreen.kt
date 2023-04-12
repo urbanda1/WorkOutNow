@@ -115,7 +115,7 @@ fun WorkOutPlanMenuScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(2f)
-                .offset(0.dp, 15.dp),
+                .offset(0.dp, 45.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(workOutPlans.value) { workOutPlan ->

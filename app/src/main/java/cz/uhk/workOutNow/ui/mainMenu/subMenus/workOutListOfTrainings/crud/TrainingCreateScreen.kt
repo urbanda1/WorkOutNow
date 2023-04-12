@@ -85,7 +85,7 @@ fun TrainingCreateScreen(
     }
 
     Column(
-        modifier = Modifier.offset(60.dp, 20.dp)
+        modifier = Modifier.offset(60.dp, 20.dp).fillMaxSize()
 
     ) {
 
@@ -211,7 +211,7 @@ fun TrainingCreateScreen(
 
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .offset(10.dp, 0.dp)
+                    .offset(10.dp, -20.dp)
             ) {
                 Text("Save")
             }
@@ -227,7 +227,7 @@ fun TrainingCreateScreen(
                         || seconds.value.isNotEmpty(),
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .offset(30.dp, 0.dp)
+                    .offset(30.dp, -20.dp)
             ) {
                 Text("Delete")
             }
@@ -238,7 +238,7 @@ fun TrainingCreateScreen(
                 },
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .offset(50.dp, 0.dp)
+                    .offset(50.dp, -20.dp)
             ) {
                 Text("Back")
             }

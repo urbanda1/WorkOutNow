@@ -59,7 +59,7 @@ fun WorkOutPlanCreateScreen(
     }
 
     Column(
-        modifier = Modifier.offset(60.dp, 20.dp)
+        modifier = Modifier.offset(60.dp, 20.dp).fillMaxSize()
 
     ) {
         Row(
@@ -143,23 +143,25 @@ fun WorkOutPlanCreateScreen(
 
 
         Row(
+         //   modifier = Modifier.fillMaxSize()
         ) {
             Button(
                 onClick = {
+
                     val trainingListEntity = TrainingListEntity(
                         title = title.value, description = description.value, icon = icon.value
                     )
                     viewModel.createTrainingListEntity(trainingListEntity)
                     parentController.navigateWorkOutPlanMainMenu()
+
                 },
                 enabled = title.value.isNotEmpty() && description.value.isNotEmpty() && icon.value.isNotEmpty(),
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .offset(60.dp, 0.dp)
+                    .offset(10.dp, 0.dp)
             ) {
                 Text("Save")
             }
-
 
             Button(
                 onClick = {
@@ -170,14 +172,25 @@ fun WorkOutPlanCreateScreen(
                 enabled = title.value.isNotEmpty() || description.value.isNotEmpty(),
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .offset(80.dp, 0.dp)
+                    .offset(30.dp, 0.dp)
             ) {
                 Text("Delete")
+            }
+
+            Button(
+                onClick = {
+                    parentController.navigateWorkOutPlanMainMenu()
+                },
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .offset(50.dp, 0.dp)
+            ) {
+                Text("Back")
             }
         }
     }
 
-    if (isVisible) {
+   if (isVisible) {
         Row(
             modifier = Modifier.offset(0.dp, -(100.dp))
         ) {

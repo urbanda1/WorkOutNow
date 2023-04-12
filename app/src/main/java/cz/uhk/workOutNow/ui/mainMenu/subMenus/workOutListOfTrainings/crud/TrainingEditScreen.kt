@@ -105,7 +105,7 @@ fun TrainingEditScreen(
     }
 
     Column(
-        modifier = Modifier.offset(60.dp, 20.dp)
+        modifier = Modifier.offset(60.dp, 20.dp).fillMaxSize()
 
     ) {
         Text(
@@ -265,7 +265,7 @@ fun TrainingEditScreen(
                         && icon.value.isNotEmpty(),
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .offset(-20.dp, 0.dp)
+                    .offset(-20.dp, -20.dp)
             ) {
                 Text("Save changes")
             }
@@ -286,7 +286,7 @@ fun TrainingEditScreen(
                         || seconds.value.isNotEmpty(),
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .offset(0.dp, 0.dp)
+                    .offset(0.dp, -20.dp)
             ) {
                 Text("Delete")
             }
@@ -297,7 +297,7 @@ fun TrainingEditScreen(
                 },
                 modifier = Modifier
                     .padding(top = 16.dp)
-                    .offset(20.dp, 0.dp)
+                    .offset(20.dp, -20.dp)
             ) {
                 Text("Back")
             }
