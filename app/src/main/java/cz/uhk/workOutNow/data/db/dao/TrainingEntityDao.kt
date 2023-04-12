@@ -1,9 +1,11 @@
 package cz.uhk.workOutNow.data.db.dao
 
 import androidx.room.*
+import cz.uhk.workOutNow.data.db.entities.SettingsEntity
 import cz.uhk.workOutNow.data.db.entities.TrainingEntity
 import cz.uhk.workOutNow.data.db.entities.TrainingListEntity
 import kotlinx.coroutines.flow.Flow
+
 @Dao
 interface TrainingEntityDao {
 
@@ -61,5 +63,30 @@ interface TrainingEntityDao {
     //delete
     @Delete
     fun deleteTrainingListEntity(trainingListEntity: TrainingListEntity)
+
+
+
+
+
+    //Settings
+    @Query("SELECT * FROM SettingsEntity where settingsID = 1")
+    fun selectSetting(): Flow<SettingsEntity>
+
+    //Settings
+    @Query("SELECT * FROM SettingsEntity")
+    fun selectAllSettings(): Flow<List<SettingsEntity>>
+
+    //insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertOrUpdateSettings(settingsEntity: SettingsEntity)
+
+    //custom update
+    @Query("UPDATE SettingsEntity set notificationsSettings = :notificationsSettings WHERE settingsID = 1")
+    fun updateSettingsEntityQuery(
+        notificationsSettings: Int,
+    )
+
+    @Delete
+    fun deleteSettingsEntity(settingsEntity: SettingsEntity)
 
 }

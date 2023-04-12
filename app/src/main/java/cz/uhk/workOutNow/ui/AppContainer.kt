@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import cz.uhk.workOutNow.data.db.dao.TrainingEntityDao
 import cz.uhk.workOutNow.ui.mainMenu.LaunchTrainingScreen
 import cz.uhk.workOutNow.ui.mainMenu.SettingsScreen
 import cz.uhk.workOutNow.ui.mainMenu.WorkOutPlanMenuScreen

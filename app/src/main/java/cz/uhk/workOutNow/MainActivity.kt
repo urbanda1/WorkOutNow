@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import cz.uhk.workOutNow.ui.AppContainer
 import cz.uhk.workOutNow.ui.theme.UMTETheme

@@ -13,6 +13,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -21,6 +23,7 @@ import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,6 +41,8 @@ fun WorkOutTrainingsScreen(
 ) {
 
     val trainings = viewModel.selectAllTrainings(id).collectAsState(emptyList())
+
+    val displayTextEmptyDatabase = remember { mutableStateOf(false) }
 
     Row(
         modifier = Modifier.offset(0.dp, 10.dp)
@@ -57,10 +62,62 @@ fun WorkOutTrainingsScreen(
         }
     }
 
+    if (trainings.value.size == 0) {
+        displayTextEmptyDatabase.value = true
+    } else {
+        displayTextEmptyDatabase.value = false
+    }
+
+    if (displayTextEmptyDatabase.value) {
+        Row(
+            modifier = Modifier
+                .offset(0.dp, 10.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "You can create exercise by clicking on the plus button bellow.",
+                modifier = Modifier.offset(-(0.dp), (10.dp)),
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Default,
+                    fontSize = 15.sp,
+                    letterSpacing = 0.sp
+                )
+            )
+        }
+
+
+    } else {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset(0.dp, (10.dp)),
+            horizontalArrangement = Arrangement.Center
+        )
+        {
+            Text(
+                text = "Your exercises",
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontStyle = FontStyle.Italic,
+                    fontFamily = FontFamily.SansSerif,
+                    fontSize = 24.sp,
+                    letterSpacing = 0.sp,
+                    shadow = Shadow(
+                        color = Color.Gray, Offset(5.0f, 10.0f), blurRadius = 3f
+                    )
+
+                )
+            )
+        }
+
+    }
+
     Column {
         Row(
             modifier = Modifier
-                .offset(0.dp, 20.dp)
+                .offset(0.dp, 35.dp)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
 
@@ -76,7 +133,7 @@ fun WorkOutTrainingsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .weight(2f)
-                .offset(0.dp, 15.dp),
+                .offset(0.dp, 37.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(trainings.value) { training ->

@@ -62,9 +62,16 @@ fun WorkOutPlanCreateScreen(
         modifier = Modifier.offset(60.dp, 20.dp)
 
     ) {
-        Text(
-            text = "Create new work out plan", modifier = Modifier.offset(70.dp, 0.dp)
-        )
+        Row(
+            modifier = Modifier
+                .offset(-(60.dp), 0.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = "Create a new work out plan", modifier = Modifier.offset(0.dp, 0.dp)
+            )
+        }
 
         OutlinedTextField(value = title.value,
             onValueChange = { title.value = it },

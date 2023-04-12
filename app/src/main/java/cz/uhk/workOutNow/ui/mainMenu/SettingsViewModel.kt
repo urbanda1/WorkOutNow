@@ -1,18 +1,23 @@
 package cz.uhk.workOutNow.ui.mainMenu
 
 import cz.uhk.workOutNow.base.BaseViewModel
+import cz.uhk.workOutNow.data.db.dao.TrainingEntityDao
+import cz.uhk.workOutNow.data.db.entities.SettingsEntity
+import kotlinx.coroutines.flow.Flow
 
 class SettingsViewModel(
- //   private val noteDao: NoteDao
+    private val trainingEntityDao: TrainingEntityDao
 ): BaseViewModel() {
 
-/*    val notes = noteDao.selectAll()*/
+    fun sellectSetting(): Flow<SettingsEntity> {
+        return trainingEntityDao.selectSetting()
+    }
 
-    fun createNote(text: String) {
+    fun editSettings(notificationSettings: Int) {
 
-/*        launch {
-            noteDao.insertOrUpdate(NoteEntity(text = text))
-        }*/
+        launch {
+            trainingEntityDao.updateSettingsEntityQuery(notificationSettings)
+        }
     }
 
 }

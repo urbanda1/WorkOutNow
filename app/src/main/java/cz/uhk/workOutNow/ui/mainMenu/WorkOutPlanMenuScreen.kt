@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,6 +42,8 @@ fun WorkOutPlanMenuScreen(
 
     val displayWarningText = remember { mutableStateOf(false) }
 
+    val displayTextEmptyDatabase = remember { mutableStateOf(false) }
+
     Row(
         modifier = Modifier.offset(0.dp, 10.dp)
 
@@ -55,6 +58,54 @@ fun WorkOutPlanMenuScreen(
                 end = Offset(x = canvasWidth, y = 0f),
                 color = Color(0xFFDB0A13),
                 strokeWidth = 10f
+            )
+        }
+    }
+
+    if (workOutPlans.value.size == 0) {
+        displayTextEmptyDatabase.value = true
+    } else {
+        displayTextEmptyDatabase.value = false
+    }
+
+    if (displayTextEmptyDatabase.value) {
+        Row(
+            modifier = Modifier.offset(0.dp, 10.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "You can create your plan by clicking on the plus button bellow.",
+                modifier = Modifier.offset(-(0.dp), (10.dp)),
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Default,
+                    fontSize = 14.sp,
+                    letterSpacing = 0.sp
+                )
+            )
+        }
+    } else {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset(0.dp, (10.dp)),
+            horizontalArrangement = Arrangement.Center
+        )
+        {
+            Text(
+                text = "Your exercise plans",
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontStyle = FontStyle.Italic,
+                    fontFamily = FontFamily.SansSerif,
+                    fontSize = 24.sp,
+                    letterSpacing = 0.sp,
+                    shadow = Shadow(
+                        color = Color.Gray, Offset(5.0f, 10.0f), blurRadius = 3f
+                    )
+
+                )
             )
         }
     }

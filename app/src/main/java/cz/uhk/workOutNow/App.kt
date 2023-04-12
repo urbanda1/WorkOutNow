@@ -25,8 +25,8 @@ class App: Application() {
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Obecna upozorneni"
-            val description = "Notifikace na vse"
+            val name = "General notifications"
+            val description = "All notifications"
             val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel("general", name, importance).apply {
                 this.description = description

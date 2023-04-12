@@ -73,9 +73,17 @@ fun WorkOutPlanEditScreen(
         modifier = Modifier.offset(60.dp, 20.dp)
 
     ) {
-        Text(
-            text = "Modify existing work out plan", modifier = Modifier.offset(70.dp, 0.dp)
-        )
+
+        Row(
+            modifier = Modifier
+                .offset(-(60.dp), 0.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = "Modify existing work out plan", modifier = Modifier.offset(0.dp, 0.dp)
+            )
+        }
 
         //z nějakého důvodu se proměnná workOutPlan.value... neukládá do mutableStateOf, řešeno takto amatérsky
         if (title.value == "" && helpTitle.value == "") {

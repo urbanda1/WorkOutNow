@@ -3,7 +3,7 @@ package cz.uhk.workOutNow.ui
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -18,11 +18,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import cz.uhk.workOutNow.R
+import cz.uhk.workOutNow.data.db.entities.SettingsEntity
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun HomeScreen(
-    parentController: NavHostController
+    parentController: NavHostController,
+    viewModel: HomeScreenViewModel = getViewModel()
 ) {
+
+    val settingsFlow = viewModel.selectAllSettings()
+
+    LaunchedEffect(settingsFlow) {
+        settingsFlow.collect { settingsList ->
+            if (settingsList.isEmpty()) {
+                viewModel.createSettings(settingsEntity = SettingsEntity(1, 1))
+            }
+        }
+    }
 
     Row(
         modifier = Modifier.offset(0.dp, 10.dp)
@@ -41,6 +54,8 @@ fun HomeScreen(
                 strokeWidth = 10f
             )
         }
+
+
     }
 
     Box(
@@ -94,7 +109,6 @@ fun HomeScreen(
             tint = Color.Unspecified // toto nastavení zachová původní barvu
         )
     }
-
 
     Row(
         modifier = Modifier.offset(0.dp, -(100.dp))
@@ -176,38 +190,6 @@ fun HomeScreen(
 
         }
     }
-
-
-    //Zrušeno z menu
-/*    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .offset(67.dp, (29.dp)),
-        contentAlignment = Alignment.BottomCenter,
-    ) {
-        IconButton(onClick = {
-            parentController.navigateWorkOutMainMenu()
-        }) {
-            Icon(
-                painterResource(R.drawable.weightsmenu), contentDescription = "",
-                modifier = Modifier.offset(-(25.dp), -(1.dp)),
-                tint = Color.Unspecified // toto nastavení zachová původní barvu
-            )
-
-            Text(
-                text = "Create Exercise",
-                modifier = Modifier.offset(-(20.dp), (35.dp)),
-                style = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.SansSerif,
-                    fontSize = 20.sp,
-                    letterSpacing = 0.sp,
-                    color = Color(0xFF000000)
-                )
-            )
-
-        }
-    }*/
 
     Box(
         modifier = Modifier

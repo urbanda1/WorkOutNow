@@ -1,5 +1,6 @@
 package cz.uhk.workOutNow.ui.mainMenu
 
+import android.content.Context
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -11,11 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.NavHostController
 import cz.uhk.workOutNow.R
 import cz.uhk.workOutNow.data.db.entities.TrainingListEntity
@@ -29,6 +33,19 @@ fun LaunchTrainingScreen(
     id: Long,
     viewModel: LaunchTrainingViewModel = getViewModel()
 ) {
+
+    val settings = viewModel.sellectSetting()
+
+    var currentSetting = remember { mutableStateOf(0) }
+
+
+    LaunchedEffect(settings) {
+        settings.collect { currentSettingSelected ->
+            currentSetting.value = currentSettingSelected.notificationsSettings
+        }
+    }
+
+    val context = LocalContext.current
 
     val trainings = viewModel.selectAllTrainings(id).collectAsState(initial = emptyList()).value
 
@@ -48,8 +65,16 @@ fun LaunchTrainingScreen(
     LaunchedEffect(isRunning.value) {
         while (isRunning.value) {
 
-
             if (timeLeft.value == 0 && iterationRun.value < trainings.size - 1) {
+
+                //poslání notifice
+                if ((currentSetting.value) == 1 && (firstRun.value == true)) {
+                    sendNotificationStartTrainingPlan(context)
+                }
+
+                if (currentSetting.value == 1 && firstRun.value == false) {
+                    sendNotificationEndExercise(context, trainings.get(iterationRun.value).name)
+                }
 
                 iterationRun.value++
 
@@ -58,10 +83,16 @@ fun LaunchTrainingScreen(
 
                 //přepnutí UI
                 firstRun.value = false
+
+
             }
 
             if (timeLeft.value == 0 && iterationRun.value == trainings.size - 1) {
                 parentController.navigateWorkOutPlanMainMenu()
+
+                if (currentSetting.value == 1) {
+                    sendNotificationEndExercise(context, trainings.get(iterationRun.value).name)
+                }
             }
 
             timeLeft.value--
@@ -356,6 +387,32 @@ fun formatTime(time: Int): String {
     val minutes = time / 60
     val seconds = time % 60
     return "${"%02d".format(minutes)}:${"%02d".format(seconds)}"
+}
+
+// posílání notifikací, jakmile je trénink ukončen - notifikace se bude zasílat, pokud ho uživatel v nastavení povolí
+private fun sendNotificationEndExercise(
+    context: Context,
+    name: String,
+) {
+
+    val builder = NotificationCompat.Builder(context, "general")
+        .setContentTitle("Exercise finished")
+        .setContentText(name)
+        .setSmallIcon(R.drawable.ic_launcher_foreground)
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
+
+    NotificationManagerCompat.from(context).notify(1, builder.build())
+}
+
+private fun sendNotificationStartTrainingPlan(context: Context) {
+
+    val builder = NotificationCompat.Builder(context, "general")
+        .setContentTitle("Exercise has begun")
+        .setSmallIcon(R.drawable.ic_launcher_foreground)
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
+
+    NotificationManagerCompat.from(context).notify(1, builder.build())
+
 }
 
 
